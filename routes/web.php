@@ -4,6 +4,8 @@ use App\Models\Post;
 use App\Models\Catigory;
 use App\Models\User;
 
+use App\Http\Controllers\PostController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,19 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-	return view('posts', [
-		'posts' => Post::latest()->get(),
-		'catigories' => Catigory::all()
-	]);
-})->name('home');
+Route::get('/', [PostController::class, 'index'])->name('home');
 
-Route::get('/posts/{post:slug}', function(Post $post) {
-
-	return view('post', [
-		'post' => $post
-	]);
-});
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
 Route::get('/catigories/{catigory:slug}', function(Catigory $catigory) {
 
